@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -94,9 +96,20 @@ public class MyFavAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
             mInterstitialAd.show((Activity) context);
         }
         else {
+            holder.progressBar.setVisibility(View.VISIBLE);
             Picasso.get()
                     .load(favourites.get(position).getImageLink())
-                    .into(holder.wallpaperImage);
+                    .into(holder.wallpaperImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            holder.progressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
             holder.setItemClickListener((view, position1) -> {
                 Intent intent = new Intent(context, ViewWallpaperActivity.class);

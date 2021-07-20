@@ -10,9 +10,12 @@ public class Common {
 
     public static final String FB_DB_NAME = "NewGames";
 
+    public static String CURRENT_WALLPAPER_ID;
     public static String CATEGORY_ID_SELECTED;
     public static String selected_background_key;
     public static Wallpapers selected_background = new Wallpapers();
+
+    public static boolean IS_FAV = false;
 
     public static boolean isConnectedToInternet(Context context)    {
 

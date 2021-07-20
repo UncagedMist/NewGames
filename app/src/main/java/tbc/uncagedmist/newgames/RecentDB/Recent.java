@@ -4,13 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-@Entity(tableName = "recent",primaryKeys = {"imageLink"})
+@Entity(tableName = "recent",primaryKeys = {"imageLink","imageId"})
 public class Recent {
 
     @ColumnInfo(name = "imageLink")
     @NonNull
     private String imageLink;
 
+    @ColumnInfo(name = "imageId")
+    @NonNull
+    private String imageId;
 
     @ColumnInfo(name = "saveTime")
     private String saveTime;
@@ -18,8 +21,9 @@ public class Recent {
     @ColumnInfo(name = "key")
     private String key;
 
-    public Recent(@NonNull String imageLink, String saveTime, String key) {
+    public Recent(@NonNull String imageLink, @NonNull String imageId, String saveTime, String key) {
         this.imageLink = imageLink;
+        this.imageId = imageId;
         this.saveTime = saveTime;
         this.key = key;
     }
@@ -31,6 +35,15 @@ public class Recent {
 
     public void setImageLink(@NonNull String imageLink) {
         this.imageLink = imageLink;
+    }
+
+    @NonNull
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(@NonNull String imageId) {
+        this.imageId = imageId;
     }
 
     public String getSaveTime() {

@@ -24,6 +24,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import tbc.uncagedmist.newgames.Common.Common;
@@ -57,16 +58,33 @@ public class CategoryFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<Wallpapers, CategoryViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull Wallpapers model) {
+
+                holder.progressBar.setVisibility(View.VISIBLE);
                 Picasso.get()
                         .load(model.getImageLink())
-                        .into(holder.wallpaperImage);
+                        .into(holder.wallpaperImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                holder.progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                 holder.setItemClickListener((view, position1) -> {
                     if (mInterstitialAd != null) {
                         mInterstitialAd.show(getActivity());
                     }
                     else {
-                        Common.CATEGORY_ID_SELECTED = adapter.getRef(position1).getKey();
+
+                        Common.selected_background = model;
+                        Common.selected_background_key = adapter.getRef(position).getKey();
+
+//                        Common.CATEGORY_ID_SELECTED = adapter.getRef(position1).getKey();
+//                        Common.CURRENT_WALLPAPER_ID = model.getImageId();
                         startActivity(new Intent(getActivity(), ViewWallpaperActivity.class));
                     }
                 });
