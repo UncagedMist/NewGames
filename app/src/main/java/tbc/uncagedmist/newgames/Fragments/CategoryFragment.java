@@ -18,6 +18,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
@@ -79,12 +81,8 @@ public class CategoryFragment extends Fragment {
                         mInterstitialAd.show(getActivity());
                     }
                     else {
-
                         Common.selected_background = model;
                         Common.selected_background_key = adapter.getRef(position).getKey();
-
-//                        Common.CATEGORY_ID_SELECTED = adapter.getRef(position1).getKey();
-//                        Common.CURRENT_WALLPAPER_ID = model.getImageId();
                         startActivity(new Intent(getActivity(), ViewWallpaperActivity.class));
                     }
                 });
@@ -157,8 +155,9 @@ public class CategoryFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        if (Common.isConnectedToInternet(getContext()))
+        if (Common.isConnectedToInternet(getContext())) {
             setCategory();
+        }
         else
             Toast.makeText(getContext(), "Please Connect to Internet...", Toast.LENGTH_SHORT).show();
 

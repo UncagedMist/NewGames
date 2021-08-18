@@ -10,6 +10,8 @@ public class Common {
 
     public static final String FB_DB_NAME = "NewGames";
 
+    public static final int ITEM_PER_AD = 4;
+
     public static String CURRENT_WALLPAPER_ID;
     public static String CATEGORY_ID_SELECTED;
     public static String selected_background_key;

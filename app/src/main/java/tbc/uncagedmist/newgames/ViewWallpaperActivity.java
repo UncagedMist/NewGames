@@ -337,7 +337,7 @@ public class ViewWallpaperActivity extends AppCompatActivity {
                                     fileName,
                                     "Live Wallpaper Image"));
 
-//                    increaseDownloadCount();
+                    increaseDownloadCount();
                 }
             }
         });
@@ -353,7 +353,7 @@ public class ViewWallpaperActivity extends AppCompatActivity {
 
         });
 
-//        increaseViewCount();
+        increaseViewCount();
     }
 
     private void adMethod() {
@@ -387,8 +387,8 @@ public class ViewWallpaperActivity extends AppCompatActivity {
         });
     }
 
-    private void getWallpaperRating(String categoryId) {
-        Query wallpaperRating = ratingTbl.orderByChild("wallpaperId").equalTo(categoryId);
+    private void getWallpaperRating(String imageId) {
+        Query wallpaperRating = ratingTbl.orderByChild("imageId").equalTo(imageId);
 
         wallpaperRating.addValueEventListener(new ValueEventListener() {
             int count = 0,sum = 0;
@@ -469,103 +469,103 @@ public class ViewWallpaperActivity extends AppCompatActivity {
         Common.IS_FAV = true;
     }
 
-//    private void increaseViewCount() {
-//        FirebaseDatabase.getInstance().getReference(Common.FB_DB_NAME)
-//                .child(Common.select_background_key)
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.hasChild("viewCount")) {
-//
-//                            WallpaperItem wallpaperItem = dataSnapshot.getValue(WallpaperItem.class);
-//                            long count = wallpaperItem.getViewCount() + 1;
-//
-//                            Map<String,Object> update_view = new HashMap<>();
-//                            update_view.put("viewCount",count);
-//
-//                            FirebaseDatabase.getInstance().getReference(Common.STR_WALLPAPER)
-//                                    .child(Common.select_background_key)
-//                                    .updateChildren(update_view)
-//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                        @Override
-//                                        public void onSuccess(Void aVoid) {
-//
-//                                        }
-//                                    }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Toast.makeText(ViewWallpaperActivity.this, "Can not update view count", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                        }
-//                        else    {
-//                            Map<String,Object> update_view = new HashMap<>();
-//                            update_view.put("viewCount",Long.valueOf(1));
-//
-//                            FirebaseDatabase.getInstance().getReference(Common.STR_WALLPAPER)
-//                                    .child(Common.select_background_key)
-//                                    .updateChildren(update_view)
-//                                    .addOnSuccessListener(aVoid -> {
-//
-//                                    }).addOnFailureListener(e -> Toast.makeText(ViewWallpaperActivity.this, "Can not set default view count", Toast.LENGTH_SHORT).show());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//    }
-//
-//    private void increaseDownloadCount() {
-//        FirebaseDatabase.getInstance().getReference(Common.STR_WALLPAPER)
-//                .child(Common.select_background_key)
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.hasChild("downloadCount")) {
-//
-//                            WallpaperItem wallpaperItem = dataSnapshot.getValue(WallpaperItem.class);
-//                            long count = wallpaperItem.getDownloadCount() + 1;
-//
-//                            Map<String,Object> update_view = new HashMap<>();
-//                            update_view.put("downloadCount",count);
-//
-//                            FirebaseDatabase.getInstance().getReference(Common.STR_WALLPAPER)
-//                                    .child(Common.select_background_key)
-//                                    .updateChildren(update_view)
-//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                        @Override
-//                                        public void onSuccess(Void aVoid) {
-//
-//                                        }
-//                                    }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Toast.makeText(ViewWallpaperActivity.this, "Can not update download count", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                        }
-//                        else    {
-//                            Map<String,Object> update_view = new HashMap<>();
-//                            update_view.put("downloadCount",Long.valueOf(1));
-//
-//                            FirebaseDatabase.getInstance().getReference(Common.STR_WALLPAPER)
-//                                    .child(Common.select_background_key)
-//                                    .updateChildren(update_view)
-//                                    .addOnSuccessListener(aVoid -> {
-//
-//                                    }).addOnFailureListener(e -> Toast.makeText(ViewWallpaperActivity.this, "Can not set default download count", Toast.LENGTH_SHORT).show());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//    }
+    private void increaseViewCount() {
+        FirebaseDatabase.getInstance().getReference(Common.FB_DB_NAME)
+                .child(Common.selected_background_key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("viewCount")) {
+
+                            Wallpapers wallpaperItem = dataSnapshot.getValue(Wallpapers.class);
+                            long count = wallpaperItem.getViewCount() + 1;
+
+                            Map<String,Object> update_view = new HashMap<>();
+                            update_view.put("viewCount",count);
+
+                            FirebaseDatabase.getInstance().getReference(Common.FB_DB_NAME)
+                                    .child(Common.selected_background_key)
+                                    .updateChildren(update_view)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ViewWallpaperActivity.this, "Can not update view count", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else    {
+                            Map<String,Object> update_view = new HashMap<>();
+                            update_view.put("viewCount",Long.valueOf(1));
+
+                            FirebaseDatabase.getInstance().getReference(Common.FB_DB_NAME)
+                                    .child(Common.selected_background_key)
+                                    .updateChildren(update_view)
+                                    .addOnSuccessListener(aVoid -> {
+
+                                    }).addOnFailureListener(e -> Toast.makeText(ViewWallpaperActivity.this, "Can not set default view count", Toast.LENGTH_SHORT).show());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void increaseDownloadCount() {
+        FirebaseDatabase.getInstance().getReference(Common.FB_DB_NAME)
+                .child(Common.selected_background_key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("downloadCount")) {
+
+                            Wallpapers wallpaperItem = dataSnapshot.getValue(Wallpapers.class);
+                            long count = wallpaperItem.getDownloadCount() + 1;
+
+                            Map<String,Object> update_view = new HashMap<>();
+                            update_view.put("downloadCount",count);
+
+                            FirebaseDatabase.getInstance().getReference(Common.FB_DB_NAME)
+                                    .child(Common.selected_background_key)
+                                    .updateChildren(update_view)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ViewWallpaperActivity.this, "Can not update download count", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else    {
+                            Map<String,Object> update_view = new HashMap<>();
+                            update_view.put("downloadCount",Long.valueOf(1));
+
+                            FirebaseDatabase.getInstance().getReference(Common.FB_DB_NAME)
+                                    .child(Common.selected_background_key)
+                                    .updateChildren(update_view)
+                                    .addOnSuccessListener(aVoid -> {
+
+                                    }).addOnFailureListener(e -> Toast.makeText(ViewWallpaperActivity.this, "Can not set default download count", Toast.LENGTH_SHORT).show());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
 
     private void addToRecent() {
         Disposable disposable = Observable.create(e -> {

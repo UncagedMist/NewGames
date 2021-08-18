@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,8 +84,9 @@ public class RecentFragment extends Fragment {
         adapter = new MyRecyclerAdapter(context,recentList);
         recyclerView.setAdapter(adapter);
 
-        if (Common.isConnectedToInternet(getContext()))
+        if (Common.isConnectedToInternet(getContext())) {
             loadRecent();
+        }
         else
             Toast.makeText(getContext(), "Please Connect to Internet...", Toast.LENGTH_SHORT).show();
 
